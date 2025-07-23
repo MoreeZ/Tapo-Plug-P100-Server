@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         triggerButton.disabled = true;
         
         try {
-            const response = await fetch('http://localhost:8000/trigger', {
+            const response = await fetch('http://192.168.0.100:42069/trigger', {
                 method: 'GET',
             });
             
