@@ -17,6 +17,8 @@ load_dotenv()
 TAPO_USERNAME = os.getenv("TAPO_USERNAME")
 TAPO_PASSWORD = os.getenv("TAPO_PASSWORD")
 TAPO_IP = os.getenv("TAPO_IP")
+SERVER_LOCAL_ADDRESS = os.getenv("SERVER_LOCAL_ADDRESS")
+SERVER_LOCAL_PORT = os.getenv("SERVER_LOCAL_PORT")
 
 app = FastAPI()
 
@@ -105,4 +107,4 @@ async def trigger_five_seconds():
 
 
 if __name__ == "__main__":
-    uvicorn.run("server:app", host="127.0.0.1", port=420, reload=True)
+    uvicorn.run("server:app", host=SERVER_LOCAL_ADDRESS, port=SERVER_LOCAL_PORT, reload=True)
