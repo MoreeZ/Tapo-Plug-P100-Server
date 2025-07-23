@@ -1,7 +1,10 @@
 import asyncio
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from plugp100.common.credentials import AuthCredential
 from plugp100.new.device_factory import connect, DeviceConnectConfiguration
 from plugp100.new.components.on_off_component import OnOffComponent
@@ -16,6 +19,13 @@ TAPO_PASSWORD = os.getenv("TAPO_PASSWORD")
 TAPO_IP = os.getenv("TAPO_IP")
 
 app = FastAPI()
+
+# Get the absolute path to the client directory
+BASE_DIR = Path(__file__).resolve().parent.parent
+CLIENT_DIR = BASE_DIR / 'client'
+
+# Mount the static files (CSS, JS, images)
+app.mount("/static", StaticFiles(directory=CLIENT_DIR), name="static")
 
 
 async def get_plug() -> OnOffComponent:
@@ -64,10 +74,18 @@ async def turn_off():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/")
+async def read_root():
+    """
+    Serve the client application's index.html file.
+    """
+    return FileResponse(CLIENT_DIR / "index.html")
+
+
 @app.get("/trigger")
 async def trigger_five_seconds():
     """
-    Turn the plug on and then automatically turn it off after 5 seconds.
+    Turn the plug on and then automatically turn it off after 3 seconds.
     """
     try:
         plug = await get_plug()
@@ -75,13 +93,13 @@ async def trigger_five_seconds():
         # Turn on
         await plug.turn_on()
         
-        # Wait for 5 seconds
-        await asyncio.sleep(5)
+        # Wait for 3 seconds
+        await asyncio.sleep(3)
         
         # Turn off
         await plug.turn_off()
         
-        return {"status": "triggered", "message": "Plug was turned on for 5 seconds"}
+        return {"status": "triggered", "message": "Plug was turned on for 3 seconds"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

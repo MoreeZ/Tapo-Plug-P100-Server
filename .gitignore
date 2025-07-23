@@ -1,5 +1,5 @@
 # Environment variables
-.env
+server/.env
 
 # Python
 __pycache__/
@@ -33,3 +33,12 @@ env/
 .vscode/
 *.swp
 *.swo
+
+# Client-specific
+client/node_modules/
+client/.cache/
+client/dist/
+
+# OS specific files
+.DS_Store
+Thumbs.db
