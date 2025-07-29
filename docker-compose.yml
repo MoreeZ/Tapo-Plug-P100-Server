@@ -1,0 +1,9 @@
+services:
+  tapo-server:
+    build: .
+    container_name: tapo-server
+    env_file:
+      - .env
+    ports:
+      - "${SERVER_LOCAL_PORT}:${SERVER_LOCAL_PORT}"
+    restart: unless-stopped
