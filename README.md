@@ -5,6 +5,22 @@ The server provides REST endpoints to turn the plug **on/off** and a small stati
 
 ---
 
+## ⚠️ Important Notice
+
+This server **relies on the [plugp100](https://github.com/petretiandrea/plugp100) library** by **petretiandrea**,  
+which is a fork of **[tapo-p100-python](https://k4czp3r.xyz/blog/post/reverse-engineering-tp-link-tapo)**  
+by **K4CZP3R**.
+
+- This project is **reverse-engineered** and **not officially supported by TP-Link**.  
+- Functionality may **break in the future** if TP-Link updates the firmware or API.
+
+---
+
+A simple FastAPI server to control your **TP-Link Tapo P100** smart plug.  
+The server provides REST endpoints to turn the plug **on/off** and a small static client UI.
+
+---
+
 ## 1. Clone the Repository
 
 ```bash
