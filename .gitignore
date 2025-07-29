@@ -1,5 +1,5 @@
 # Environment variables
-server/.env
+.env
 
 # Python
 __pycache__/
