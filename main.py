@@ -23,7 +23,7 @@ SERVER_LOCAL_PORT = int(os.getenv("SERVER_LOCAL_PORT", "80"))
 app = FastAPI()
 
 # Get the absolute path to the client directory
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 CLIENT_DIR = BASE_DIR / 'client'
 
 # Mount the static files (CSS, JS, images)
