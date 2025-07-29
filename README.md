@@ -1,70 +1,105 @@
-# Tapo Smart Plug P100 Controller
+# Tapo Plug P100 Server
 
-A full-stack application to control TP-Link Tapo P100 Smart Plugs with a FastAPI backend and a responsive web interface.
+A simple FastAPI server to control your **TP-Link Tapo P100** smart plug.  
+The server provides REST endpoints to turn the plug **on/off** and a small static client UI.
 
-## Project Structure
+---
 
-The project is divided into two main components:
+## 1. Clone the Repository
 
-- `client/`: Web interface to control the smart plug
-- `server/`: FastAPI server that communicates with the Tapo P100 device
-
-## Features
-
-- Control Tapo P100 smart plugs via a web interface
-- Turn the plug on and off via HTTP endpoints
-- Trigger the plug to turn on for 5 seconds
-- Easy to use RESTful API
-- Responsive web interface
-
-## Setup
-
-### 1. Clone the repository:
-```
-git clone https://github.com/MoreeZ/Tapo-Plug-P100-Server.git
+```bash
+git clone https://github.com/yourusername/Tapo-Plug-P100-Server.git
 cd Tapo-Plug-P100-Server
 ```
 
-### 2. Server Setup
+---
 
-1. Install server dependencies:
-   ```
-   cd server
-   pip install -r requirements.txt
-   ```
+## 2. Setup Environment Variables
 
-2. Create a `.env` file in the server directory with your Tapo credentials (see `.env.example`):
-   ```
-   TAPO_USERNAME=your_email@example.com
-   TAPO_PASSWORD=your_password
-   TAPO_IP=192.168.x.x
-   ```
+Create a `.env` file in the project root:
 
-### 3. Client Setup
-
-The client is a static web application that can be served directly without additional installation steps.
-
-## Usage
-
-### Starting the Server
-
-```
-cd server
-python main.py
+```ini
+TAPO_USERNAME=your_email@example.com
+TAPO_PASSWORD=your_password
+TAPO_IP=192.168.x.x
+SERVER_LOCAL_ADDRESS=192.168.x.x
+SERVER_LOCAL_PORT=80
 ```
 
-The server will start on http://0.0.0.0:8000
+**Notes:**
+- `TAPO_IP` = IP address of your Tapo plug on the local network  
+- `SERVER_LOCAL_ADDRESS` = IP of your host machine (for accessing the server)  
+- `SERVER_LOCAL_PORT` = Port exposed by the server (default: 80)  
 
-### Opening the Client
+---
 
-Open `client/index.html` in your web browser to access the user interface.
+## 3. Requirements
 
-## API Endpoints
+- Docker installed and running  
+- No need to install Python dependencies locally — everything runs inside Docker
 
-- `GET /on` - Turn the plug on
-- `GET /off` - Turn the plug off
-- `GET /trigger` - Turn the plug on for 5 seconds, then off
+---
 
-## License
+## 4. Deploy the Server
 
-MIT
+Run the deployment script:
+
+```bash
+./deploy_tapo_server.sh
+```
+
+This will:
+
+1. Check that `.env` exists  
+2. Build the Docker image  
+3. Start a container on the port specified in `.env`  
+
+If successful, you’ll see:
+
+```
+Tapo Server is running at: http://<SERVER_LOCAL_ADDRESS>:<SERVER_LOCAL_PORT>/
+```
+
+---
+
+## 5. Verify the Server
+
+Open your browser:
+
+```
+http://<SERVER_LOCAL_ADDRESS>:<SERVER_LOCAL_PORT>/
+```
+
+Or test the endpoints:
+
+```bash
+curl http://<SERVER_LOCAL_ADDRESS>:<SERVER_LOCAL_PORT>/on
+curl http://<SERVER_LOCAL_ADDRESS>:<SERVER_LOCAL_PORT>/off
+curl http://<SERVER_LOCAL_ADDRESS>:<SERVER_LOCAL_PORT>/trigger
+```
+
+---
+
+## 6. Managing the Server
+
+- **Check running containers**:
+
+```bash
+docker ps
+```
+
+- **View logs**:
+
+```bash
+docker logs <container_id>
+```
+
+- **Stop the server**:
+
+```bash
+docker stop <container_id>
+```
+
+---
+
+You’re now ready to control your **Tapo Plug P100** from any browser or REST client on your local network.
